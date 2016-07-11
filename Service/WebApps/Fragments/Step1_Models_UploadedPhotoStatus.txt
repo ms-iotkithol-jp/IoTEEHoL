@@ -1,0 +1,42 @@
+﻿    /// <summary>
+    /// 人数が複数人の場合は各感情計測値は平均値となる
+    /// </summary>
+    public class UploadedPhotoStatus
+    {
+        public string DeviceId { get; set; }
+        public DateTime Time { get; set; }
+        public string FileUri { get; set; }
+        public int NumOfPerson { get; set; }
+        /// <summary>
+        /// いとわしさ
+        /// </summary>
+        public double Disgust { get; set; }
+        /// <summary>
+        /// 怒り
+        /// </summary>
+        public double Anger { get; set; }
+        /// <summary>
+        /// 軽蔑
+        /// </summary>
+        public double Contempt { get; set; }
+        /// <summary>
+        /// 恐れ
+        /// </summary>
+        public double Fear { get; set; }
+        /// <summary>
+        /// 幸せ
+        /// </summary>
+        public double Happiness { get; set; }
+        /// <summary>
+        /// 真顔
+        /// </summary>
+        public double Neutral { get; set; }
+        /// <summary>
+        /// 悲しみ
+        /// </summary>
+        public double Sadness { get; set; }
+        /// <summary>
+        /// 驚き
+        /// </summary>
+        public double Suprise { get; set; }
+    }

@@ -1,0 +1,53 @@
+﻿<head runat="server">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>Comfortable</title>
+    <style>
+        body {
+            font-size:48px;
+        }
+    </style>
+    <script type="text/javascript" src="Scripts/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="Scripts/jquery.signalR-2.2.0.min.js"></script>
+    <script type="text/javascript" src="SignalR/hubs"></script>
+    <script type="text/javascript">
+        var comfortableHub = $.connection.ComfortableHub;
+        comfortableHub.on("Notify", function (packet) {
+            var ndid = document.getElementById('notice-device-id');
+            var ndtemp = document.getElementById('notice-temperature');
+            var ndhum = document.getElementById('notice-humidity');
+            var ndpressure = document.getElementById('notice-pressure');
+            var ndcomf = document.getElementById('notice-comfortable');
+            var nt = document.getElementById('notice-time');
+            var ndprob = document.getElementById('notice-probability');
+            ndid.innerHTML = packet.DeviceId;
+            ndtemp.innerHTML = packet.Temperature;
+            ndhum.innerHTML = packet.Humidity;
+            ndpressure.innerHTML = packet.Pressure;
+            if (packet.PredictedComfortable) {
+                ndcomf.innerHTML = "快適でしょ？";
+            }
+            else {
+                ndcomf.innerHTML = "不快かも";
+            }
+            ndprob.innerHTML = packet.Probability * 100;
+            nt.innerHTML = packet.MeasuredTime;
+        });
+        $.connection.hub.start();
+
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+    <table>
+        <tr><td>Device Id:</td><td><div id="notice-device-id" /></td></tr>
+        <tr><td>温度</td><td><div id="notice-temperature" /></td></tr>
+        <tr><td>湿度</td><td><div id="notice-humidity" /></td></tr>
+        <tr><td>大気圧</td><td><div id="notice-pressure" /></td></tr>
+        <tr><td>今の状態</td><td><div id="notice-comfortable" /></td></tr>
+        <tr><td>確率</td><td><div id="notice-probability" /></td></tr>
+        <tr><td>更新時間</td><td><div id="notice-time" /></td></tr>
+    </table>
+    </div>
+    </form>
+</body>

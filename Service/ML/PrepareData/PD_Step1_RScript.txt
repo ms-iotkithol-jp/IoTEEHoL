@@ -1,0 +1,27 @@
+# Calcurate means of emotions at same time and same device
+# Add properties of means of emotions to dataset
+
+# Map 1-based optional input ports to variables
+dataset1 <- maml.mapInputPort(1) # class: data.frame
+library(plyr)
+
+dataset1$MeasuredTSN <- as.numeric(dataset1$MeasuredTS)
+dataset1$DeviceIdTS <- paste( dataset1$DeviceId , dataset1$MeasuredTS)
+
+dHmean <- ddply(dataset1,~DeviceId,summarise,happinessMean=mean(Happiness))
+d2<-merge(dataset1,dHmean,by=c("DeviceId"))
+dDmean <- ddply(dataset1,~DeviceId,summarise,disgustMean=mean(Disgust))
+d3<-merge(d2,dDmean,by=c("DeviceId"))
+dSmean <- ddply(dataset1,~DeviceId,summarise,sadnessMean=mean(Sadness))
+d4<-merge(d3,dSmean,by=c("DeviceId"))
+
+dtHMean <- ddply(dataset1,c('DeviceId','MeasuredTS'),summarize, happinessDTMean=mean(Happiness))
+d5<- merge(d4,dtHMean,by=c('DeviceId','MeasuredTS'))
+dtDMean <- ddply(dataset1,c('DeviceId','MeasuredTS'),summarize, disgustDTMean=mean(Disgust))
+d6<- merge(d5,dtDMean,by=c('DeviceId','MeasuredTS'))
+dtSMean <- ddply(dataset1,c('DeviceId','MeasuredTS'),summarize, sadnessDTMean=mean(Sadness))
+d7<- merge(d6,dtSMean,by=c('DeviceId','MeasuredTS'))
+
+data.set <-d7
+
+maml.mapOutputPort("data.set");

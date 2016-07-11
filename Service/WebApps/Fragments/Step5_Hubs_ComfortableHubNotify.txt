@@ -1,0 +1,4 @@
+        public void Notify(Models.ComfortableStatus status)
+        {
+            Clients.Others.Notify(status);
+        }

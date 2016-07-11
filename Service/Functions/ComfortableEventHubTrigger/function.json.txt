@@ -1,0 +1,12 @@
+{
+  "bindings": [
+    {
+      "type": "eventHubTrigger",
+      "name": "myEventHubMessage",
+      "direction": "in",
+      "path": "comfortable",
+      "connection": "egcomfortableeventhub"
+    }
+  ],
+  "disabled": false
+}

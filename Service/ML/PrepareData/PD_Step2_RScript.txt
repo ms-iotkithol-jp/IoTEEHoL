@@ -1,0 +1,38 @@
+# Fix Emotion level for each Environment measuring
+
+# Map 1-based optional input ports to variables <- Temperature, Humidity and Pressures from Sense Hat
+dataset1 <- maml.mapInputPort(1) # class: data.frame
+# Map 2-based optional input ports to variables <- Output of Step1's emotion data
+dataset2 <- maml.mapInputPort(2)
+library(dplyr)
+
+dataset1$MeasuredTS<-as.numeric( substr(dataset1$msgId, regexpr("[0-9]{17}$",dataset1$msgId), nchar(dataset1$msgId)))
+
+happinessv <- c()
+disgustv <- c()
+sadnessv <- c()
+msgIdv <- c()
+nums<-c()
+for(i in 1:length(dataset1$msgId)){
+    key<-dataset1$msgId
+    dsub <- dataset2[dataset2$MeasuredTSN <= dataset1$MeasuredTS[i],]
+    if(length(dsub$MeasuredTSN)>0){
+        mdtsn <- max(dsub$MeasuredTSN)
+        ddsub <- dsub[dsub$MeasuredTSN==mdtsn,]
+        happinessv[length(happinessv)+1] = max(ddsub$happinessDTM)
+        disgustv[length(disgustv)+1]=max(ddsub$disgustDTM)
+        sadnessv[length(sadnessv)+1]=max(ddsub$sadnessDTM)
+        
+        msgIdv[length(msgIdv)+1] = dataset1$msgId
+    }
+    else{
+        happinessv[length(happinessv)+1]=NULL
+        disgustv[length(disgustv)+1]=NULL
+        sadnessv[length(sadnessv)+1]=NULL
+    }
+}
+
+tempset <-data.frame(msgId=msgIdv,Happiness=happinessv,Disgust=disgustv,Sadness=sadnessv)
+data.set <- merge(dataset1, tempset,by=c("msgId"))
+
+maml.mapOutputPort("data.set");

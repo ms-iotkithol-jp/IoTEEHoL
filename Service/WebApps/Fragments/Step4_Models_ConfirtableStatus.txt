@@ -1,0 +1,10 @@
+    public class ComfortableStatus
+    {
+        public string DeviceId { get; set; }
+        public DateTime MeasuredTime { get; set; }
+        public double Temperature { get; set; }
+        public double Humidity { get; set; }
+        public double Pressure { get; set; }
+        public bool PredictedComfortable { get; set; }
+        public double Probability { get; set; }
+    }

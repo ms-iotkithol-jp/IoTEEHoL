@@ -1,0 +1,22 @@
+# Add HIGH|LOW comfortable property based on Happiness, Disgust and Sadness
+# Low leve comfortable is the case that Happiness is Low, Disgust and Sadness are High
+
+# Map 1-based optional input ports to variables
+dataset1 <- maml.mapInputPort(1) # class: data.frame
+library(plyr)
+
+dHmean <- ddply(dataset1,~deviceId,summarise,happinessMean=mean(Happiness))
+d2<-merge(dataset1,dHmean,by=c("deviceId"))
+dDmean <- ddply(dataset1,~deviceId,summarise,disgustMean=mean(Disgust))
+d3<-merge(d2,dDmean,by=c("deviceId"))
+dSmean <- ddply(dataset1,~deviceId,summarise,sadnessMean=mean(Sadness))
+d4<-merge(d3,dSmean,by=c("deviceId"))
+
+d4$HappinessStatus <-as.factor(ifelse(d4$Happiness > d4$happinessMean, "HIGH","LOW"))
+d4$DisgustStatus <- as.factor( ifelse(d4$Disgust > d4$disgustMean, "HIGH","LOW"))
+d4$SadnessStatus <- as.factor( ifelse(d4$Disgust > d4$sadnessMean, "HIGH","LOW"))
+d4$Comfortable <- as.factor(ifelse(((d4$HappinessStatus=='LOW')&((d4$DisgustStatus=='HIGH')|(d4$SadnessStatus=='HIGH'))), "FALSE", "TRUE"))
+
+data.set <- d4
+
+maml.mapOutputPort("data.set");

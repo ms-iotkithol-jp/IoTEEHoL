@@ -1,0 +1,13 @@
+    [HubName("ComfortableHub")]
+    public class ComfortableHub : Hub
+    {
+        public void Notify(Models.ComfortableStatus status)
+        {
+            Clients.Others.Notify(status);
+        }
+
+        public void PhotoUploaded(Models.UploadedPhotoStatus status)
+        {
+            Clients.Others.PhotoUploaded(status);
+        }
+    }

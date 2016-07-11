@@ -1,0 +1,19 @@
+{
+  "bindings": [
+    {
+      "name": "myBlob",
+      "type": "blobTrigger",
+      "direction": "in",
+      "path": "photos/{detect}.jpg",
+      "connection": "egmsudemy_STORAGE"
+    },
+     {
+      "name": "table",
+      "type": "table",
+      "tableName": "EmotionScores",
+      "connection": "egmsudemy_STORAGE",
+      "direction": "in"
+    }
+  ],
+  "disabled": false
+}

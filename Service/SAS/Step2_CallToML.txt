@@ -1,0 +1,7 @@
+WITH subquery AS (  
+        SELECT deviceid, measuredTime, temperature, humidity, pressure, msgId, 
+        prediction(measuredTime, deviceId, humidity, pressure, temperature) as result from sensor  
+    )
+SELECT deviceId, measuredTime, temperature, humidity, pressure, msgId,
+    result.[Scored Labels] as PredictedComfortable, result.[Scored Probabilities] as probability
+    into comfortable from subquery;
