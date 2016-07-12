@@ -22,11 +22,11 @@ namespace IoTEESensingDevice
 {
     public partial class MainPage
     {
-        private void StartHoL()
+        private async void StartHoL()
         {
             StartSenseHatMeasuring();
             StartIoTHubSending();
-            StartPhotoUpload();
+            await StartPhotoUpload();
         }
 
         private DispatcherTimer measureTimer;
