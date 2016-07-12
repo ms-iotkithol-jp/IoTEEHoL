@@ -1,5 +1,5 @@
 ﻿//#define ACCESS_IOT_HUB
-/#define PHOTO_UPLOAD
+//#define PHOTO_UPLOAD
 #if (ACCESS_IOT_HUB)
 using Microsoft.Azure.Devices.Client;
 #endif
