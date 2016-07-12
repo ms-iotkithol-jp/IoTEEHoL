@@ -99,7 +99,7 @@ namespace IoTEESensingDevice
         private void StartIoTHubSending()
         {
 #if (ACCESS_IOT_HUB)
-            string iotHubConnectionString= "HostName=" + Win10IoTCoreApp.IoTHoLConfig.IoTHubEndpoint + ";DeviceId=" + deviceId + ";SharedAccessKey=" + Win10IoTCoreApp.IoTHoLConfig.DeviceKey;
+            string iotHubConnectionString= "HostName=" + IoTEESensingDevice.IoTHoLConfig.IoTHubEndpoint + ";DeviceId=" + deviceId + ";SharedAccessKey=" + IoTEESensingDevice.IoTHoLConfig.DeviceKey;
             try
             {
                 deviceClient = DeviceClient.CreateFromConnectionString(iotHubConnectionString, TransportType.Http1);
@@ -239,7 +239,7 @@ namespace IoTEESensingDevice
 #if (PHOTO_UPLOAD)
         private async Task InitializeCloudPhotoContainer()
         {
-            var storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=" + Win10IoTCoreApp.IoTHoLConfig.StorageAccount + ";AccountKey=" + Win10IoTCoreApp.IoTHoLConfig.StorageKey;
+            var storageConnectionString = "DefaultEndpointsProtocol=https;AccountName=" + IoTEESensingDevice.IoTHoLConfig.StorageAccount + ";AccountKey=" + IoTEESensingDevice.IoTHoLConfig.StorageKey;
             var cloudStorageAccount = CloudStorageAccount.Parse(storageConnectionString);
             var blobClient = cloudStorageAccount.CreateCloudBlobClient();
             photoContainer = blobClient.GetContainerReference(containerName);
