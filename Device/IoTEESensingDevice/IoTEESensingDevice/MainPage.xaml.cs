@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Emmellsoft.IoT.Rpi.SenseHat;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -34,7 +35,7 @@ namespace IoTEESensingDevice
         private string deviceId = "";
         private ISenseHat senseHat;
 
-        private void MainPage_Loaded(object sender, RoutedEventArgs e)
+        private async void MainPage_Loaded(object sender, RoutedEventArgs e)
         {
             FixDeviceId();
             if (deviceId == "minwinpc")
