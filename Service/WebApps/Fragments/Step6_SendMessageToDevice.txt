@@ -1,0 +1,16 @@
+        public async Task<string> Post([FromUri]string deviceId,[FromUri]string message)
+        {
+            try
+            {
+                var service = Microsoft.Azure.Devices.ServiceClient.CreateFromConnectionString("[IoT-Hub-Connection-String]");
+                await service.OpenAsync();
+                var msg = new Microsoft.Azure.Devices.Message(System.Text.UTF8Encoding.UTF8.GetBytes(message));
+                await service.SendAsync(deviceId, msg);
+                await service.CloseAsync();
+            }
+            catch(Exception ex)
+            {
+                return ex.Message;
+            }
+            return message;
+        }

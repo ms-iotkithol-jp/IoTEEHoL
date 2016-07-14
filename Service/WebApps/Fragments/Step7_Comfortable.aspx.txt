@@ -10,6 +10,17 @@
     <script type="text/javascript" src="Scripts/jquery.signalR-2.2.0.min.js"></script>
     <script type="text/javascript" src="SignalR/hubs"></script>
     <script type="text/javascript">
+        function sendMessageToDevice(deviceId, message) {
+            $.ajax({
+                type: 'POST',
+                url: '/api/SendDevice?deviceId=' + deviceId + '&message=' + message,
+                success: function (data, textStatus, xhr) {
+                    var dsid = document.getElementById('device-status');
+                    dsid.innerHTML = textStatus;
+                }
+            });
+        }
+        var motorStatus = 'off';
         var comfortableHub = $.connection.ComfortableHub;
         comfortableHub.on("Notify", function (packet) {
             var ndid = document.getElementById('notice-device-id');
@@ -25,9 +36,17 @@
             ndpressure.innerHTML = packet.Pressure;
             if (packet.PredictedComfortable) {
                 ndcomf.innerHTML = "快適でしょ？";
+                if (motorStatus === 'on') {
+                    motorStatus = 'off';
+                    sendMessageToDevice(packet.deviceId, motorStatus);
+                }
             }
             else {
                 ndcomf.innerHTML = "不快かも";
+                if (motorStatus === 'off') {
+                    motorStatus = 'on';
+                    sendMessageToDevice(packet.deviceId, motorStatus);
+                }
             }
             ndprob.innerHTML = packet.Probability * 100;
             nt.innerHTML = packet.MeasuredTime;
@@ -47,6 +66,7 @@
         <tr><td>今の状態</td><td><div id="notice-comfortable" /></td></tr>
         <tr><td>確率</td><td><div id="notice-probability" /></td></tr>
         <tr><td>更新時間</td><td><div id="notice-time" /></td></tr>
+        <tr><td>デバイス制御</td><td><div id="device-status" /></td></tr>
     </table>
     </div>
     </form>
