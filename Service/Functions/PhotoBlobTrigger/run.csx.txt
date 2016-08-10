@@ -29,7 +29,7 @@ public async static void Run(CloudBlockBlob myBlob, CloudTable table, TraceWrite
         double supriseTotal=0;
         int numOfPerson=emotionsResult.Length;
 
-        var regx = new System.Text.RegularExpressions.Regex(@"^device-(?<deviceId>\w+)-(?<yyyy>[0-9]{4})(?<MM>[0-9]{2})(?<dd>[0-9]{2})(?<hh>[0-9]{2})(?<mm>[0-9]{2})(?<ss>[0-9]{2})(?<fff>[0-9]{3})\.jpg$");
+        var regx = new System.Text.RegularExpressions.Regex(@"^device-(?<deviceId>[\w\-.]+)-(?<yyyy>[0-9]{4})(?<MM>[0-9]{2})(?<dd>[0-9]{2})(?<hh>[0-9]{2})(?<mm>[0-9]{2})(?<ss>[0-9]{2})(?<fff>[0-9]{3})\.jpg$");
         var match = regx.Match(myBlob.Name);
         var deviceId = match.Groups["deviceId"].Value;
         var datetime = new string[7];

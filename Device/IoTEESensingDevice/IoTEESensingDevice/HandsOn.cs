@@ -84,7 +84,7 @@ namespace IoTEESensingDevice
 #if (ACCESS_IOT_HUB)
                     measuredBuffer.Add(reading);
 #endif
-                    Debug.WriteLine(String.Format("{0}:T={1},H={2},P={3},A={4}:{5}:{6},G={7}:{8}:{9},M={10}:{11}:{12}", reading.MeasuredTime.ToString("yyyyMMdd-hhmmss"), reading.Temperature, reading.Humidity, reading.Pressure, reading.AccelX, reading.AccelY, reading.AccelZ, reading.GyroX, reading.GyroY, reading.GyroZ, reading.MagX, reading.MagY, reading.MagZ));
+                    Debug.WriteLine(String.Format("{0}:T={1},H={2},P={3},A={4}:{5}:{6},G={7}:{8}:{9},M={10}:{11}:{12}", reading.MeasuredTime.ToString("yyyyMMdd-HHmmss"), reading.Temperature, reading.Humidity, reading.Pressure, reading.AccelX, reading.AccelY, reading.AccelZ, reading.GyroX, reading.GyroY, reading.GyroZ, reading.MagX, reading.MagY, reading.MagZ));
                 }
                 measureTimer.Start();
             };
@@ -142,7 +142,7 @@ namespace IoTEESensingDevice
                         MagX = sr.MagX,
                         MagY = sr.MagY,
                         MagZ = sr.MagZ,
-                        msgId = deviceId + sr.MeasuredTime.ToString("yyyyMMddhhmmssfff"),
+                        msgId = deviceId + sr.MeasuredTime.ToString("yyyyMMddHHmmssfff"),
                         MeasuredTime = sr.MeasuredTime,
                         Pressure = sr.Pressure,
                         Temperature = sr.Temperature
